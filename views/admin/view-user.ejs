@@ -1,0 +1,44 @@
+<section>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-6">
+            <!-- <a href="/admin/add-product" class="btn btn-success ml-auto">Add Product</a> -->
+        </div>
+        </div>
+        <table class="table mt-5">
+            <thead>
+              <tr>
+                <th scope="col">no</th>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Action</th>
+                
+              </tr>
+            </thead>
+            <tbody>
+              <%let no=1%>
+                <% users.forEach(users => { %>
+              <tr> 
+                
+                <th scope="row"><%= no++ %></th>
+                <td><%= users.Name %></td>
+                <td><%= users.Email %></td>
+              
+                
+                  <% if(users.Status=='false'){ %> 
+                    <form action="/admin/userblock/<%= users._id %> " method="post">
+                <td><button  class="btn btn-outline-danger"  type="submit" name="Status" value='true' >Block</button></td>
+              </form>
+                <% }else{ %>
+                  <form action="/admin/userUnblock/<%= users._id %> " method="post">
+                  <td><button  class="btn btn-outline-success"  type="submit" name="Status" value='false' >UnBlock</button></td> 
+                </form>
+                <% } %>  
+              </tr>
+
+             
+              <% }) %>
+            </tbody>
+          </table>
+    </div>
+ </section>

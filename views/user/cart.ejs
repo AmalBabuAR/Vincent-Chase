@@ -1,0 +1,67 @@
+<section>
+    <div class="container">
+        <table class="table mt-5">
+            <thead>
+                  <tr>
+                    <th scope="col">Item</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Quantity</th>
+                  </tr>
+            </thead>
+    <tbody>
+        <% products.forEach(products => { %>
+     <tr>
+       
+        <td><img style="width: 70px;height:70px" src="/product-image/<%= products.product._id%>.jpg" alt=""></td>
+        <td><%= products.product.Name %></td>
+        <td><i class="fa fa-rupee"></i><%= products.product.Price %></td>
+      
+        <td>
+            <button  onclick="changeQuantity('<%= products._id %>','<%= products.product._id %>','<%= products.quantity %>',-1)">-</button>
+            <span id="<%= products.product._id %>"> <%= products.quantity %> </span>
+            <button  onclick="changeQuantity('<%= products._id %>','<%= products.product._id %>','<%= products.quantity %>',1)">+</button>
+        </td>
+        <td>
+        <a href="" class="btn btn-danger"> Remove </a>
+        </td>
+    </tr>
+    <% }) %>
+    </tbody>
+    </table> 
+     <hr>
+     
+     <h3 class="float-right">TOTAL:<%= totalValue %> </h3>
+     <a href="/place-order" class="btn btn-success mt-3">Place Order</a>
+    </div>
+    </section>
+
+    <script>
+        console.log(3455657876576789);
+        function changeQuantity(cartId,proId,qty,count) {
+            console.log(123456789);
+           qty = parseInt(qty)
+           console.log(typeof(qty));
+
+            $.ajax({
+                url:'/changeproductquantity',
+                data:{
+                    cart:cartId,
+                    product:proId,
+                    count:count,
+                    quantity:qty
+                },
+                method:'POST',
+                success:(response)=>{
+                    console.log(response);
+                    location.reload()
+                    if(response.removeProduct){
+                        alert("Product Removed from cart")
+                        
+                    }else{
+                        document.getElementById(proId).innerHTML=qty+count
+                    }
+                }
+            })   
+        }
+    </script>

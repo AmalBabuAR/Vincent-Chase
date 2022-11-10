@@ -1,0 +1,32 @@
+ <div class="container p-5">
+<h2>Enter Delivery details</h2>
+<div class="mb-3">
+    <label for="formGroupExampleInput" class="form-label">Address</label>
+    <input type="text" class="form-control" id="formGroupExampleInput" placeholder="">
+  </div>
+  <div class="mb-3">
+    <label for="formGroupExampleInput2" class="form-label">Pincord</label>
+    <input type="number" class="form-control" id="formGroupExampleInput2" placeholder="">
+  </div>
+  <div class="mb-3">
+    <label for="formGroupExampleInput2" class="form-label">Mobile</label>
+    <input type="number" class="form-control" id="formGroupExampleInput2" placeholder="">
+  </div>
+</div>
+
+<div class="col-md-4">
+    <div class="container mt-5 ml-5 checkout"></div>
+    <h5>Total Amount : Rs.<%= total  %> </h5>
+    <hr>
+    <div class="payment">
+    <p>Payment method</p>
+    <label class="radio-inline">
+    <input type=" radio" name="payment-method" value="COD" checked>COD
+    </label> 
+    <label class=" radio-inline mt-2">
+    <input type="radio" name="payment-method" value="ONLINE">Online payment
+    </label>
+    <button class="btn btn-primary float-right" type="submit">Checkout</button>
+    </div>
+</div>
+    </div>

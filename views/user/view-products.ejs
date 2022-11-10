@@ -1,0 +1,19 @@
+
+<section>
+    <div class="container mt-5">
+    <div class="row">
+        <% products.forEach(products => { %>
+        <div class="col-md-3 p-3">
+            <div class="card" style="width: 18rem; height:21rem;">
+                <img src="/product-image/<%= products._id%>.jpg" class="card-img-top" alt="Card image cap" style="height:10rem ;" >
+                <div class="card-body">
+                  <h5 class="card-title"><%= products.Name %></h5>
+                  <p class="card-text"><%= products.Description %></p>
+                  <a href="/add-to-cart/<%= products._id%>" class="btn btn-primary">Add to Cart</a>
+                </div>
+              </div>
+        </div>
+   <% }) %>
+    </div>
+  </div>
+  </section>

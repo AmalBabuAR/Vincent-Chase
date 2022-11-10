@@ -1,0 +1,55 @@
+<%- include('../user/demoSectiond-products.ejs') %>
+
+<div class="row">
+    <!-- /womens -->
+    <% products.forEach(products => { %>
+    <div class="col-md-3 product-men women_two shop-gd" >
+        <div class="product-googles-info googles" >
+            <div class="men-pro-item" >
+                <div class="men-thumb-item" >
+                    <img src="/product-image/<%= products._id %>.jpg" class="img-fluid" alt="">
+                    <div class="men-cart-pro">
+                        <div class="inner-men-cart-pro">
+                            <a href="/singleview/<%= products._id %>" class="link-product-add-cart">Quick View</a>
+                        </div>
+                    </div>
+                    <span class="product-new-top">New</span>
+                </div>
+                <div class="item-info-product">
+                    <div class="info-product-price">
+                        <div class="grid_meta">
+                            <div class="product_price">
+                                <h4>
+                                    <a href="single.html"><%= products.Name %></a>
+                                </h4>
+                                <div class="grid-price mt-2">
+                                    <span class="money "><%= products.Price %></span>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="googles single-item hvr-outline-out">
+                           
+                            <button onclick="addToCart('<%= products._id %>')" class="googles-cart pgoogles-cart">
+                                    <i class="fas fa-cart-plus"></i>
+                                </button>
+                         
+                                
+                            
+
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <% }) %>
+
+</div>
+
+
+</div>
+</div>
+<!--//product right-->
+</div>

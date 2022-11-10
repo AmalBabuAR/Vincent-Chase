@@ -1,0 +1,10 @@
+
+<div class="container p-5 m-5">
+<form class="mb-3" action="/admin/edit-category/<%= category._id  %> " method="post" >
+    <label for="formGroupExampleInput" class="form-label mb-3 fs-3">Edit Category</label>
+    <input type="text" class="form-control" id="formGroupExampleInput" name="Category" value="<%= category.Category %>">
+
+    <button type="submit" class="btn btn-success mt-4">Submit</button>
+</form>
+
+</div>
