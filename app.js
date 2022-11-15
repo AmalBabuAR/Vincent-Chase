@@ -44,6 +44,10 @@ db.connect((err)=> {
 app.use('/',userRouter)
 app.use('/admin',adminRouter)
 
+app.use((req,res) =>{
+    res.status(404).render('404')
+})
+
 
 app.listen(PORT, ()=> {
     console.log(`server is running on http://localhost:${PORT}`);
