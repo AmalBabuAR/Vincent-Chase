@@ -1,0 +1,19 @@
+<section>
+    <div class="container mt-5">
+        <div class="row">
+            <% products.forEach(products=>{%> 
+            <div class="col-md-3 p-3">
+                <div class="card" style="width:15rem; height:24rem">
+                <img class="card-img-top" src="/product-image/<%= products.product._id%>.jpg" alt="card image cap" style="height:12rem">
+                <div class="card-body">
+                    <h5 class="card-title"><%= products.product.Name %> </h5>
+                    <p class="card-text">Rs.<%= products.product.Price %></p>
+                    <p class="card-text">Quantity<%= products.quantity %></p>
+                    <p class="card-text"><%= products.Description%></p>
+                </div>
+            </div>
+            </div>
+            <% })  %> 
+        </div>
+    </div>
+</section>
