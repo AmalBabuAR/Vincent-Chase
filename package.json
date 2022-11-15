@@ -23,6 +23,7 @@
     "morgan": "^1.10.0",
     "nocache": "^3.0.4",
     "nodemon": "^2.0.20",
+    "razorpay": "^2.8.3",
     "syntax-error": "^1.4.0"
   }
 }
