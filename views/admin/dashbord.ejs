@@ -1,0 +1,192 @@
+ 
+   <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+        
+    </div>
+    <!-- Content Row -->
+    <div class="row">
+        <!-- total income Card Example -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                Total Income</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800"><i class="fas fa-rupee-sign"></i><%= total  %> </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+      <!-- total order Card Example -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-danger shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
+                                Total Orders</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800"><%= orders %> </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-truck fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- total users Example -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                Total Users</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800"><%= AllUsers %> </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-users fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+         <!-- total users Example -->
+         <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-info shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                Total Products</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800"><%= AllProducts %> </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-glasses fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>    
+    <div class="mt-4" id="myPlot" style="width:100%; max-width:1000px;"></div>
+    <!-- <div id="myPlot"></div> -->
+
+    <div class="timeOfSale d-none"><%=timeOfSale %> <%= amountOfSale %> </div>
+
+    <div class="card-body">
+        <div class="table-responsive">
+           <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+              <thead>
+                      <tr>
+                          <th>No</th>
+                          <th>Title</th>
+                          <th>Category</th>
+                          <th>Actual Price</th>
+                          <th>Offer</th>
+                          <th>Discount Price</th>
+                          <th>Stocks</th>
+                          <th>Sales</th>
+                          <th>Images</th>
+                        
+                          
+                      </tr>
+                  </thead>
+                
+                  <tbody>
+                      <%let no=1%>
+                      <% products.forEach(products => { %>
+                       
+                      <tr>
+                          <td><%= no++ %></td>
+                          <td><%= products.Name %></td>
+                          <td><%= products.Category %></td>           
+                          <td><%= products.Price %></td>
+                          <td><%= products.ProductOffer %>%</td> 
+                          <td><%= products.DiscountPrice %> </td>
+                          <td><%= products.Stocks %></td>
+                          <td><%= products.Sales %></td>
+                          <td><img style="width:50px;height:50px" src="/product-image/<%= products._id%>.jpg" alt="" srcset=""></td></td>
+                         
+                      </tr>
+                      <% }) %>
+                  </tbody>
+           </table>
+        </div>
+        </div>   
+
+
+
+<!-- 
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Bar Chart</h6>
+        </div>
+        <div class="card-body">
+            <div class="chart-bar">
+                <canvas id="myBarChart"></canvas>
+            </div>
+            <hr>
+            Styling for the bar chart can be found in the
+            <code>/js/demo/chart-bar-demo.js</code> file.
+        </div>
+    </div> -->
+<!-- Graphs and chart -->
+  <script src="https://cdn.plot.ly/plotly-2.16.1.min.js"></script>
+    
+    <script>
+        let timeOfSale = document.querySelector(".timeOfSale").innerHTML;
+        console.log(timeOfSale)
+        console.log(['<%= timeOfSale %>']);
+        let saleTime = ["<%=timeOfSale%>"]
+        let xArray = saleTime[0].split(',')
+        console.log("xArray");
+        console.log(typeof xArray[0])
+        console.log(xArray)
+        let yArray = [<%=amountOfSale%>];
+        console.log(yArray)
+        // Define Data
+        let data = [{
+            x: xArray,
+            y: yArray,
+            mode: "lines",
+            type: "bar"
+        }];
+        let barData = [{
+            x: xArray,
+            y: yArray,
+            mode: "lines",
+            type: "bar"
+        }];
+        // Define Layout
+        let layout = {
+            xaxis: {
+                type: 'date'
+                // title:'dfdf'
+            },
+            yaxis: {
+                title: "Sales"
+            },
+            title: "Revenue per day"
+        };
+        let barLayout = {
+            xaxis: {
+                type: 'date'
+            },
+            yaxis: {
+                title: "Sales"
+            },
+            title: "Sales"
+        };
+        // Display using Plotly
+        tester = document.getElementById('myPlot')
+        Plotly.newPlot(tester, data, layout);
+        // Plotly.newPlot("myBar", barData, barLayout);
+    </script>

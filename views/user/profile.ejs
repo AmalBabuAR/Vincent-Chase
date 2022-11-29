@@ -1,0 +1,145 @@
+<!-- <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script> -->
+<!-- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+<hr>
+<div class="container bootstrap snippet">
+    <div class="row">
+        <div class="col-sm-10">
+            <h1>User Profile</h1>
+        </div>
+        <div class="col-sm-2"></div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">
+            <!--left col-->
+
+
+            <div class="text-center">
+                <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="avatar img-circle img-thumbnail"
+                    alt="avatar">
+
+                <input type="file" class="text-center center-block file-upload">
+            </div>
+            </hr><br>
+
+
+
+
+            <ul class="list-group">
+                <li class="list-group-item text-muted">Activity <i class="fa fa-dashboard fa-1x"></i></li>
+                <li class="list-group-item text-right"><a href="/orders" class="pull-left" style="color:black"><strong>Order History</strong></a> 13</li>
+                <li class="list-group-item text-right"><a href="/DemoCart" class="pull-left" style="color:black"><strong>My Cart</strong></a> 125</li>
+                <li class="list-group-item text-right"><span class="pull-left"><strong>Address</strong></span> 37</li>
+                <li class="list-group-item text-right"><a href="/logout" class="pull-left" style="color:black"><strong>Logout</strong></a></li>
+                
+            </ul>
+
+
+        </div>
+        <!--/col-3-->
+        <div class="col-sm-9">
+
+
+
+            <div class="tab-content">
+                <div class="tab-pane active" id="home">
+                    
+                    <hr>
+                    <form class="form" action="/address" method="post" id="registrationForm">
+                        <input type="text" id="" name="userId" value="<%= userId %>" hidden>
+                        <div class="form-group">
+
+                            <div class="col-xs-6">
+                                <h5>Full Name</h5>
+                                <label for="first_name"></label>
+                                <input type="text" class="form-control" name="first_name" id="first_name"
+                                    placeholder="first name" title="enter your first name if any.">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-6">
+                                <h5>Mobile</h5>
+                                <label for="mobile"></label>
+                                <input type="text" class="form-control" name="mobile" id="mobile"
+                                    placeholder="enter mobile number" title="enter your mobile number if any.">
+                            </div>
+                        </div>
+                        <div class="form-group">
+
+                            <div class="col-xs-6">
+                                <h5>Email</h5>
+                                <label for="email"></label>
+                                <input type="email" class="form-control" name="email" id="email"
+                                    placeholder="you@email.com" title="enter your email.">
+                            </div>
+                        </div>
+                        <div class="form-group">
+
+                            <div class="col-xs-6">
+                                <h5>Pincode</h5>
+                                <label for="pincord"></label>
+                                <input type="text" class="form-control" id="location" name="pincode" placeholder="somewhere"
+                                    title="enter a location">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-6">
+                                <h5>Address</h5>
+                                <label for="address"></label>
+                                <textarea type="text" name="address" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                 <br>
+                                    <button class="btn btn-lg btn-success" type="submit"><i
+                                            class="glyphicon glyphicon-ok-sign"></i> Save</button>
+                                    <button class="btn btn-lg" type="reset"><i class="glyphicon glyphicon-repeat"></i>
+                                        Reset</button>
+                                </div>
+                            </div>    
+                    </form>
+
+                    <hr>
+
+                </div>
+                <!--/tab-pane-->
+
+
+
+            </div>
+            <!--/tab-pane-->
+        </div>
+        <!--/tab-content-->
+
+    </div>
+    <!--/col-9-->
+</div>
+<!--/row-->
+</div>
+<!-- <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script> -->
+<!-- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+<script>
+    $(document).ready(function () {
+
+
+        var readURL = function (input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('.avatar').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+
+        $(".file-upload").on('change', function () {
+            readURL(this);
+        });
+    });
+
+
+</script>

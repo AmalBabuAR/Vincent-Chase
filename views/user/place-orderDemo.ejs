@@ -1,0 +1,349 @@
+<!--checkout-->
+<section class="banner-bottom-wthreelayouts py-lg-5 py-3">
+  <div class="container-check">
+    <div class="inner-sec-shop px-lg-4 px-3">
+      <h3 class="tittle-w3layouts my-lg-4 mt-3">Checkout</h3>
+      <form
+        action="/place-order"
+        id="checkout-form"
+        method="POST"
+        class="creditly-card-form agileinfo_form"
+       >
+        <div class="checkout-left">
+          <div class="col-md-3 checkout-left-basket">
+            <h4>AMOUNT TO BE PAID</h4>
+            <ul>
+              <li>
+                Product1
+                <i>-</i>
+                <span>$281.00 </span>
+              </li>
+              <li>
+                Product2
+                <i>-</i>
+                <span>$325.00 </span>
+              </li>
+              <li>
+                Product3
+                <i>-</i>
+                <span>$325.00 </span>
+              </li>
+              <li>
+                Discount
+                <i>-</i>
+                <span id="discount"></span>
+              </li>
+              <li>
+                Total
+                <i>-</i>
+                <span id="discountTotal"><%= total %></span>
+              </li>
+              <li>
+                <h4>Payment Method</h4>
+              </li>
+              <li>
+                <span class="radio-inline cod">
+                  <input id="codinput1"
+                    type="radio"
+                    name="payment-method"
+                    value="COD"
+                    checked
+                  />
+                  COD
+                </span>
+                <br />
+              </li>
+              <li>
+                <span class="radio-inline cod2">
+                  <input id="codinput2" type="radio" name="payment-method" value="ONLINE" />
+                  Online payment
+                </span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="col-md-6 address_form pb-5">
+            <h4>Shipping Address</h4>
+
+            <section class="creditly-wrapper wrapper">
+              <div class="information-wrapper">
+                <div class="first-row form-group">
+                  <div class="controls">
+                    <label class="control-label"> </label>
+                    <input
+                      class="billing-address-name form-control"
+                      type="text"
+                      name="name"
+                      id="name"
+                      placeholder="Full name"
+                    />
+                  </div>
+                  <div class="card_number_grids">
+                    <div class="card_number_grid_left">
+                      <div class="controls">
+                        <label class="control-label"></label>
+                        <input
+                          class="form-control"
+                          type="text"
+                          id="mobile"
+                          name="mobile"
+                          placeholder="Mobile number"
+                        />
+                      </div>
+                    </div>
+
+                    <div class="clear"></div>
+                  </div>
+
+                  <!-- <div class="controls">
+                                        <label class="control-label">Address type: </label>
+                                        <select class="form-control option-w3ls">
+                                            <option>Office</option>
+                                            <option>Home</option>
+                                            <option>Commercial</option>
+
+                                        </select>
+                                    </div> -->
+                  <div class="controls">
+                    <label class="control-label"></label>
+                    <input
+                      class="form-control"
+                      type="text"
+                      name="address"
+                      id="address"
+                      placeholder="Address"
+                    />
+                  </div>
+                  <div class="card_number_grids">
+                    <div class="card_number_grid_left">
+                      <div class="controls">
+                        <label class="control-label"></label>
+                        <input
+                          class="form-control"
+                          type="text"
+                          id="pincode"
+                          name="pincode"
+                          placeholder="Pincode"
+                        />
+                      </div>
+                    </div>
+
+                    <div class="clear"></div>
+                  </div>
+                  <div>
+                    <input
+                      type="text"
+                      id=""
+                      name="userId"
+                      value="<%= user._id %>"
+                      hidden
+                    />
+                  </div>
+                </div>
+                <button class="submit check_out" type="submit">Checkout</button>
+              </div>
+            </section>
+
+            <!-- <div class="checkout-right-basket">
+                        <a href="payment.html">Make a Payment </a>
+                    </div> -->
+          </div>
+        </form>
+          <div class="col-md-3 checkout-right-basket">
+            <h4>COUPONS</h4>
+            <section class="creditly-wrapper wrapper">
+              <div class="information-wrapper">
+                <div class="first-row form-group">
+                  
+                  <form action="#" id="coupon-form" method="post">
+                  <div class="controls" >
+                    <label class="control-label"> </label>
+                    <h5 id="errMsg"></h5>
+                    <input
+                      class="billing-address-name form-control"
+                      type="text"
+                      name="coupon"
+                      placeholder="COUPONS CODE"
+                    />
+                    
+                    <input
+                    type="text"
+                    id=""
+                    name="userId"
+                    value="<%= user._id %>"
+                    hidden
+                  />
+                    <button type="submit" class="btn btn-gradient-dark">Redeem</button>
+                  </div>
+                </form>
+                </div>
+              </div>
+            </section>
+            <br />
+            <br>
+            
+            <h4>ADDRESS</h4>
+            <div class="dropdown">
+              <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                Choose Address
+              </button>
+              
+              <div class="dropdown-menu" >
+                <% if(address){ %> 
+              <% address.forEach((add) =>{ %> 
+                <div onclick="address('<%= add.name%>','<%= add.mobile%>','<%= add.pincode%>','<%= add.address%>')">
+                <button class="dropdown-item" type="button"  ><%= add.address %> </button>
+                
+              </div>
+              <% }) %> 
+              <button class="dropdown-item" type="button"  >New Address</button>
+              <% }else if(address==undefined){ %> 
+                <button class="dropdown-item" type="button"  >New Address</button>
+                <% } %> 
+              </div>
+              
+            </div>
+          </div>
+
+          <div class="clearfix"></div>
+        </div>
+      
+    </div>
+  </div>
+</section>
+<!--//checkout-->
+
+<script>
+  $("#checkout-form").submit((e) => {
+    e.preventDefault();
+    $.ajax({
+      url: "/place-order",
+      method: "POST",
+      data: $("#checkout-form").serialize(),
+      success: (response) => {
+        alert('checkout');
+        if (response.codSuccess) {
+          location.href = "/order-success";
+        } else {
+          razorpayPayment(response);
+        }
+      },
+    });
+  });
+
+ $('#coupon-form').submit((e)=>{
+  e.preventDefault()
+  $.ajax({
+    url: "/coupon-check",
+    method:"POST",
+    data: $("#coupon-form").serialize(),
+    success:(response) =>{
+      if(response.status){
+        document.getElementById('errMsg').innerHTML=response.errMsg
+      }else if(response.code){
+        document.getElementById('errMsg').innerHTML=response.errMsg
+      }else if(response.discountAdded){
+        document.getElementById('errMsg').innerHTML=response.errMsg
+        document.getElementById('discountTotal').innerHTML=response.discountAdded
+        document.getElementById('discount').innerHTML=response.discount
+        console.log(response.discountAdded);
+      }else if(response.value){
+        document.getElementById('errMsg').innerHTML=response.errMsg
+       
+      }
+    }
+  })
+ })
+ function address(name,mobile,pincode,address){
+  document.getElementById('name').value = name
+  document.getElementById('mobile').value = mobile
+  document.getElementById('pincode').value = pincode
+  document.getElementById('address').value = address
+ }
+
+
+  function razorpayPayment(order) {
+    var options = {
+      key: "rzp_test_TlOxM5vAeO4Wbp", // Enter the Key ID generated from the Dashboard
+      amount: order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+      currency: "INR",
+      name: "VINCENT CHASE",
+      description: "Test Transaction",
+      image: "https://example.com/your_logo",
+      order_id: order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+      handler: function (response) {
+        // alert(response.razorpay_payment_id);
+        // alert(response.razorpay_order_id);
+        // alert(response.razorpay_signature)
+
+        verifyPayment(response, order);
+      },
+      prefill: {
+        name: "Gaurav Kumar",
+        email: "gaurav.kumar@example.com",
+        contact: "9999999999",
+      },
+      notes: {
+        address: "Razorpay Corporate Office",
+      },
+      theme: {
+        color: "#3399cc",
+      },
+    };
+    var rzp1 = new Razorpay(options);
+    rzp1.open();
+  }
+  function verifyPayment(payment, order) {
+    $.ajax({
+      url: "/verify-payment",
+      data: {
+        payment,
+        order,
+      },
+      method: "POST",
+      success: (response) => {
+        if (response.status) {
+          location.href = "/order-success";
+        } else {
+          alert("Payment Failed");
+        }
+      },
+    });
+  }
+</script>
+<style>
+  input[type="radio"] {
+    width: 20px;
+    height: 20px;
+  }
+
+  #codinput1{
+    margin-right: 10px;
+  }
+
+  #codinput2{
+    margin-right: 10px;
+  }
+
+
+  span.radio-inline {
+    display: flex;
+
+    align-items: center;
+  }
+
+  .checkout {
+    border: 1px solid;
+    border-radius: 3px;
+    padding: 30px;
+  }
+  .cod {
+    margin-inline-end: 200px;
+  }
+  .cod2 {
+    margin-inline-end: 120px;
+  }
+  .payment {
+    padding-bottom: 16px;
+  }
+</style>

@@ -3,6 +3,7 @@
 <div class="row">
     <!-- /womens -->
     <% products.forEach(products => { %>
+    <% let price = products.Price*((100-products.ProductOffer)/100)  %> 
     <div class="col-md-3 product-men women_two shop-gd" >
         <div class="product-googles-info googles" >
             <div class="men-pro-item" >
@@ -23,20 +24,17 @@
                                     <a href="single.html"><%= products.Name %></a>
                                 </h4>
                                 <div class="grid-price mt-2">
-                                    <span class="money "><%= products.Price %></span>
+                                    <span class="money "><span class="text-dark">RS:</span><%= products.DiscountPrice %></span>
+                                    <span class="ml-2" style="text-decoration-line: line-through"><%= products.Price %></span>
                                 </div>
                             </div>
                             
                         </div>
                         <div class="googles single-item hvr-outline-out">
                            
-                            <button onclick="addToCart('<%= products._id %>')" class="googles-cart pgoogles-cart">
+                            <button onclick="addToCart('<%= products._id %>')" class="googles-cart pgoogles-cart delete">
                                     <i class="fas fa-cart-plus"></i>
-                                </button>
-                         
-                                
-                            
-
+                            </button>
                         </div>
                     </div>
                     <div class="clearfix"></div>
@@ -53,3 +51,14 @@
 </div>
 <!--//product right-->
 </div>
+
+<script>
+
+// $(".delete").on("click",function(e){
+//     e.preventDefault()
+//     var self=$(this)
+    
+
+//   })
+
+</script>

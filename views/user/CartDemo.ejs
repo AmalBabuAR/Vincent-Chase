@@ -1,8 +1,10 @@
 <!--checkout-->
 <section class="banner-bottom-wthreelayouts py-lg-5 py-3">
+
 	<div class="p-5 m-5">
 		<div class="inner-sec-shop px-lg-4 px-3">
 			<h3 class="tittle-w3layouts my-lg-4 mt-3">Shoping Cart </h3>
+			
 			<div class="checkout-right">
 				<h4>Your shopping cart contains:
 					<span>3 Products</span>
@@ -19,11 +21,11 @@
 							<th>Remove</th>
 						</tr>
 					</thead>
-
+					<%let no=1%>
 					<% products.forEach(products=> { %>
 						<tbody>
-							<tr class="rem1">
-								<td class="invert">1</td>
+							<tr class="rem1" >
+								<td class="invert"><%= no++ %></td>
 								<td class="invert-image">
 									<a href="/singleview/<%= products.product._id %>">
 										<img src="/product-image/<%= products.product._id %>.jpg"  alt=" "
@@ -36,12 +38,12 @@
 								<td class="invert">
 									<div class="quantity">
 										
-										<button
+										<button id="btnDisable"
 											onclick="changeQuantity('<%= products._id %>','<%= products.product._id %>','<%= user%>',-1)">-</button>
-										<span id="<%= products.product._id %>">
+										<span  id="<%= products.product._id %>">
 											<%= products.quantity %>
 										</span>
-										<button
+										<button class="btnDisable"
 											onclick="changeQuantity('<%= products._id %>','<%= products.product._id %>','<%= user%>',1)">+</button>
 
 									</div>
@@ -52,9 +54,11 @@
 
 								<td class="invert">Rs.<%= products.product.Price %>
 								</td>
+							
 								<td class="invert">
 									<div class="rem">
-										<a href="/removecart/<%= products.product._id%>" class="close1" ></a>
+										<a  class="close1" onclick="remove('<%= products.product._id%>','<%= user%>')"></a>
+									
 									</div>
 
 								</td>
@@ -65,29 +69,27 @@
 						</tbody>
 				</table>
 			</div>
+			
 			<div class="checkout-left row">
 				<div class="col-md-4 checkout-left-basket">
 					<h4>Continue to basket</h4>
 					<ul>
-						<li>Product1
+						<% products.forEach(products=> { %>
+						<li><%= products.product.Name %>
 							<i>-</i>
-							<span>$281.00 </span>
+							<span>Rs.<%= products.product.Price %></span>
 						</li>
-						<li>Product2
+						<% }) %>
+						
+						<li>
+							ProductOffer							
 							<i>-</i>
-							<span>$325.00 </span>
-						</li>
-						<li>Product3
-							<i>-</i>
-							<span>$325.00 </span>
-						</li>
-						<li>Total Service Charges
-							<i>-</i>
-							<span>$55.00</span>
+							<span>Rs.<%= products.ProductOffer
+								  %> </span>
 						</li>
 						<li>Total
 							<i>-</i>
-							<span id="total">Rs.<%= totalValue %> </span>
+							<span id="total">Rs.<%= totalValue %></span>
 						</li>
 					</ul>
 				</div>
@@ -102,8 +104,12 @@
 				<div class="clearfix"> </div>
 
 			</div>
+			
 
 		</div>
+
+
+
 	</div>
 
 </section>
@@ -128,20 +134,43 @@
 			success: (response) => {
 				console.log(response);
 				
+				let num =response.cartQuantity
 				const total = response.total;
-				console.log(response.total);
-				document.getElementById(proId).innerHTML=quantity+count
-				document.getElementById('total').innerHTML=total
-				
-				if(response.removeProduct) {
+				document.getElementById(proId).innerHTML= num
+				document.getElementById('total').innerHTML=total	
+				if(response.cartQuantity.removeProduct) {
+					document.getElementById(proId).hidden = true
 					alert("Product Removed from cart")
 					location.reload()
-
 				} else {
-					console.log(responce);
-					
+					console.log(response);
 				}
 			}
 		})
 	}
+
+	function remove(cartId,userId){
+		
+		$.ajax({
+			url:"/removecart",
+			data:{
+				cart:cartId,
+				user:userId
+			},
+			method:"POST",
+			success:(response)=>{
+
+				if(response.removeCart){
+					alert("removed")
+					location.reload()
+					
+				}else{
+					console.log(response);
+				}
+			}	
+		})
+	}
+
+
+	
 </script>

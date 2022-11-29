@@ -6,6 +6,9 @@ const { ObjectID } = require("bson");
 const objectId = require("mongodb").ObjectId;
 const Razorpay = require('razorpay');
 const { resolve } = require("path");
+const { request } = require("http");
+const dotenv = require("dotenv").config()
+const client = require('twilio')(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN)
 
 var instance = new Razorpay({
   key_id: 'rzp_test_TlOxM5vAeO4Wbp',
@@ -16,6 +19,20 @@ module.exports = {
   doSignup: (userData) => {
     return new Promise(async (resolve, reject) => {
       userData.Password = await bcrypt.hash(userData.Password, 10);
+        client
+              .verify
+              .services(process.env.Service_SID)
+              .verifications
+              .create({
+                  to:`+91${userData.Number}`,
+                  channel:"sms"
+              }).then((data)=>{
+                  (Name1 = userData.Name),
+                  (Mobilenumber1 = userData.Number),
+                  (Password1 = bcrypt.hashPassword),
+                  (Email1 = userData.Email)
+                res.redirect('/otpSignupVerify')
+              })
       db.get()
         .collection(collection.USER_COLLECTION)
         .insertOne(userData)
@@ -23,6 +40,43 @@ module.exports = {
           resolve(userData.Password);
         });
     });
+  },
+ otpSignupVerifyPost: (req, res) => {
+    if (req.body.otp.length === 6) {
+      client.verify
+        .services(process.env.Service_SID)
+        .verificationChecks.create({
+          to: `+91${Mobilenumber1}`,
+          code: req.body.otp,
+        })
+        .then((data) => {
+          if (data.status === "approved") {
+            const user = new User({
+              Name: Name1,
+              Mobilenumber: Mobilenumber1,
+              Email: Email1,
+              Password: Password1,
+            });
+            user
+              .save()
+              .then((result) => {
+                console.log("otp signup successful");
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+            res.redirect("/");
+          } else {
+            session = req.session;
+            session.invalidOTP = true;
+            res.redirect("/otpLoginVerify");
+          }
+        });
+    } else {
+      session = req.session;
+      session.invalidOTP = true;
+      res.redirect("/otpLoginVerify");
+    }
   },
   doLogin: (userData) => {
     return new Promise(async (resolve, reject) => {
@@ -143,10 +197,10 @@ module.exports = {
               item: 1,
               quantity: 1,
               product: {
-                $arrayElemAt: ["$product", 0],
+                $arrayElemAt: ["$product",0],
               },
             },
-          },
+          }
           // {
           //     $lookup:{
           //         from:collection.PRODUCT_COLLECTION,
@@ -167,7 +221,6 @@ module.exports = {
         .toArray();
       //    console.log(cartItems[0].products);
       resolve(cartItems);
-      console.log(cartItems);
     });
   },
   getCartCount: (userId) => {
@@ -189,19 +242,19 @@ module.exports = {
     details.quantity = parseInt(details.quantity);
 
     return new Promise((resolve, reject) => {
-      if (details.count == -1 && details.quantity == 1) {
-        db.get()
-          .collection(collection.CART_COLLECTION)
-          .updateOne(
-            { _id: objectId(details.cart) },
-            {
-              $pull: { products: { item: objectId(details.product) } },
-            }
-          )
-          .then((response) => {
-            resolve({ removeProduct: true });
-          });
-      } else {
+      // if (details.count == -1 && details.quantity == 1) {
+      //   db.get()
+      //     .collection(collection.CART_COLLECTION)
+      //     .updateOne(
+      //       { _id: objectId(details.cart) },
+      //       {
+      //         $pull: { products: { item: objectId(details.product) } },
+      //       }
+      //     )
+      //     .then((response) => {
+      //       resolve({ removeProduct: true });
+      //     });
+      // } else {
         db.get()
           .collection(collection.CART_COLLECTION)
           .updateOne(
@@ -214,10 +267,63 @@ module.exports = {
             }
           )
           .then((response) => {
-            resolve({ status: true });
+            let count = response
+            console.log(count);
+            console.log("quantity");
+            console.log(count.quantity);
+            resolve({ status: true },response.quantity);
           });
-      }
+      // }
     });
+  },
+  getCartQuantity:(details) =>{
+    console.log('getCartQuantity');
+    console.log(details);
+
+    return new Promise((resolve,reject)=>{
+
+      if (details.count == -1 && details.quantity == 1) {
+        db.get()
+          .collection(collection.CART_COLLECTION)
+          .updateOne(
+            { _id: objectId(details.cart) },
+            {
+              $pull: { products: { item: objectId(details.product) } },
+            }
+          )
+          .then((response) => {
+            resolve({ removeProduct: true });
+          });
+        }else{
+          db.get()
+            .collection(collection.CART_COLLECTION)
+            .aggregate([
+              {
+                $match: { _id: objectId(details.cart) },
+              },
+              {
+                $unwind: "$products",
+              },
+              {
+                $project: {
+                  item: "$products.item",
+                  quantity: "$products.quantity",
+                },
+              },
+              {
+                $match :{item :objectId(details.product) }
+              },
+              
+            ])
+            .toArray()
+            // .find({quantity : 1})
+            .then((responce)=>{
+              resolve(responce[0].quantity);
+              
+            })
+          }
+    })
+
   },
   getTotalAmount: (userId) => {
     return new Promise(async (resolve, reject) => {
@@ -306,9 +412,10 @@ module.exports = {
   placeOrder: (order, products, total) => {
     return new Promise((resolve, reject) => {
       console.log(order);
-      let status = order["payment-method"] === "COD" ? "placed" : "pending";
+      let status = order["payment-method"] === "COD" ? "Placed" : "Pending";
       let orderObj = {
         deliveryDetails: {
+          name: order.name,
           mobile: order.mobile,
           address: order.address,
           pincode: order.pincode,
@@ -328,7 +435,6 @@ module.exports = {
           db.get()
             .collection(collection.CART_COLLECTION)
             .deleteOne({ user: objectId(order.userId) });
-            console.log(response.insertedId);
           resolve(response.insertedId);
         });
     });
@@ -342,7 +448,7 @@ module.exports = {
         .get()
         .collection(collection.CART_COLLECTION)
         .findOne({ "user": objectId(userId) });
-      console.log(cart);
+     
       resolve(cart?.products);
     });
   },
@@ -353,7 +459,7 @@ module.exports = {
                          .collection(collection.ORDER_COLLECTION)
                          .find({userId:objectId(userId)})
                          .toArray()
-                  console.log(orders);
+                 
                   resolve(orders)
     })
   },
@@ -388,10 +494,11 @@ module.exports = {
                                   }
                                 }
                                ]).toArray()
-                               console.log(orderItems);
+                              
                                resolve(orderItems)
     })
   },
+  
   generateRazorpay:(orderId,total)=>{
     return new Promise((resolve,reject)=>{
       var options = {
@@ -431,12 +538,91 @@ module.exports = {
         .updateOne({_id:objectId(orderId)},
         {
           $set:{
-            status:'placed'
+            status:'Placed'
           }
         }
         ).then(()=>{
           resolve()
         })
     })
+  },
+  removeCartProduct:(cartId,userId)=>{
+    return new Promise((resolve,reject)=>{
+      console.log("cardDBid");
+      console.log(cartId);
+      db.get()
+        .collection(collection.CART_COLLECTION)
+        .updateOne({
+          user:objectId(userId)
+        },{
+          $pull:{products:{item:objectId(cartId)}}
+        })
+        .then((response)=>{
+          resolve({ removeCart:true})
+        })
+    })
+  },
+  getAllOrders:() => {
+    return new Promise(async(resolve,reject) => {
+      let orders = await db.get()
+                           .collection(collection.ORDER_COLLECTION)
+                           .find()
+                           .toArray()
+                          resolve(orders)
+    })
+  },
+  updateStatus:(_id,statusUpdate)=>{
+    console.log(_id,statusUpdate);
+    return new Promise ((resolve,reject)=>{
+                      db.get()
+                        .collection(collection.ORDER_COLLECTION)
+                        .updateOne({_id:objectId(_id)},{
+                          $set:{
+                            status:statusUpdate
+                          }
+                        }).then((response)=>{
+                          resolve()
+                        })
+    })
+  },
+  addProfileAddress:(address)=>{
+    let add = {
+      name: address.first_name,
+      mobile: address.mobile,
+      pincode: address.pincode,
+      address: address.address
+    }
+    return new Promise((resolve,reject)=>{
+                      db.get()
+                        .collection(collection.USER_COLLECTION)
+                        .updateOne({_id: objectId(address.userId)},
+                        {
+                          $push: { address: add }
+                        }
+                        ).then((response)=>{
+                          resolve()
+                        })
+    })
+  },
+  getUserAddress:(userId)=>{
+    // console.log("insid db get user add");
+    // console.log(userId);
+    return new Promise(async(resolve,reject)=>{
+           let address = await db.get()
+                        .collection(collection.USER_COLLECTION)
+                        .findOne({_id:objectId(userId._id)},{
+                          address:1
+                        })
+                        console.log("after find one");
+                        console.log(address.address);
+                          resolve(address.address)
+                       
+                             
+    })
   }
+
+
+
+
+
 }

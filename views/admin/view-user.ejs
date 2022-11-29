@@ -30,7 +30,7 @@
                 <td><button  class="btn btn-outline-danger"  type="submit" name="Status" value='true' onclick="return confirm('Are you want to Block <%= users.Name %> ?')" >Block</button></td>
               </form>
                 <% }else{ %>
-                  <form action="/admin/userUnblock/<%= users._id %> " method="post">
+                  <form action="/admin/userUnblock/<%= users._id %>" method="post">
                   <td><button  class="btn btn-outline-success"  type="submit" name="Status" value='false' onclick="return confirm('Are you want to UnBlock <%= users.Name %> ?')" >UnBlock</button></td> 
                 </form>
                 <% } %>  

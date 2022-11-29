@@ -1,39 +1,81 @@
- <section>
-    <div class="container   mt-3">
-        <div class="row">
-            <div class="col-md-6">
-            <a href="/admin/add-product" class="btn btn-success ml-auto">Add Product</a>
-        </div>
-        </div>
-        <table class="table mt-5">
-            <thead>
-              <tr>
-                <th scope="col">no</th>
-                <th scope="col">Title</th>
-                <th scope="col">Category</th>
-                <th scope="col">Description</th>
-                <th scope="col">Images</th>
-                <th scope="col">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <%let no=1%>
-                <% products.forEach(products => { %>
-              <tr> 
-                
-                <th scope="row"><%= no++ %></th>
-                <td><%= products.Name %></td>
-                <td><%= products.Category %></td>
-                <td><%= products.Description %></td>
-                <td><img style="width:50px;height:50px" src="/product-image/<%= products._id%>.jpg" alt="" srcset=""></td>
-                <td>
-                  <a href="/admin/edit-product/<%= products._id %>" class="btn btn-primary">Edit</a>
-                  <a href="/admin/delete-product/<%= products._id %>" class="btn btn-danger" onclick="return confirm('Are you want to delete <%= products.Name %> ? ')">delete</a>
-                </td>
-              </tr>
+<div class="row">
+  <div class="col-md-6">
+  <a href="/admin/add-product" class="btn btn-info ml-3">Add Product</a>
+</div>
+</div>
 
+<div class="card-body">
+<div class="table-responsive">
+   <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+      <thead>
+              <tr>
+                  <th>No</th>
+                  <th>Title</th>
+                  <th>Category</th>
+                  <th>Actual Price</th>
+                  <th>Offer</th>
+                  <th>Discount Price</th>
+                  <th>Stocks</th>
+                  <th>Description</th>
+                  <th>Images</th>
+                  <th>Edit</th>
+                  <th>Delete</th>
+                  
+              </tr>
+          </thead>
+          <tfoot>
+              <tr>
+                  <th>No</th>
+                  <th>Title</th>
+                  <th>Category</th>
+                  <th>Actual Price</th>
+                  <th>Offer</th>
+                  <th>Discount Price</th>
+                  <th>Stocks</th>
+                  <th>Description</th>
+                  <th>Images</th>
+                  <th>Edit</th>
+                  <th>Delete</th>
+                  
+              </tr>
+          </tfoot>
+          <tbody>
+              <%let no=1%>
+              <% products.forEach(products => { %>
+               
+              <tr>
+                  <td><%= no++ %></td>
+                  <td><%= products.Name %></td>
+                  <td><%= products.Category %></td>           
+                  <td><%= products.Price %></td>
+                  <td><%= products.ProductOffer %>%</td> 
+                  <td><%= products.DiscountPrice %> </td>
+                  <td><%= products.Stocks %></td>
+                  <td><%= products.Description %></td>
+                  <td><img style="width:50px;height:50px" src="/product-image/<%= products._id%>.jpg" alt="" srcset=""></td></td>
+                  <td>
+                      <a href="/admin/edit-product/<%= products._id %>" class="btn btn-success btn-circle">
+                          <i class="fas fa-pen "></i>
+                  </td>        
+                  <td>
+                      <a href="/admin/delete-product/<%= products._id %>"  onclick="return confirm('Are you want to delete <%= products.Name %> ? ')" class="btn btn-danger btn-circle">
+                          <i class="fas fa-trash"></i>
+                  </td>
+              </tr>
               <% }) %>
-            </tbody>
-          </table>
-    </div>
- </section>
+          </tbody>
+   </table>
+</div>
+</div>    
+
+
+ <script>
+$(document).ready(function() {
+    $('#productsTable').DataTable( {
+        dom: 'Bfrtip',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ]
+    } );
+} );
+ </script>

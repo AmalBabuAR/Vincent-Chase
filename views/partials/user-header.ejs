@@ -7,7 +7,7 @@
         </div>
         <div class="col-md-6 logo-w3layouts text-center">
             <h1 class="logo-w3layouts">
-                <a class="navbar-brand" href="index.html">
+                <a class="navbar-brand" href="/">
                     VINCENT CHASE</a>
             </h1>
         </div>
@@ -19,7 +19,7 @@
 
                         <a href="/democart">
                             <button class="top_googles_cart" type="submit" name="submit" value="">
-                                My Cart
+                                Cart
                                 <i class="fas fa-cart-arrow-down"></i>
                                 <span class="badge text-bg-secondary" id="cart-count">
                                     <%= cartCount%>
@@ -43,6 +43,7 @@
                                 </button>
                                 <ul class="dropdown-menu">
                                     <% if(locals.users){ %>
+                                        <li><a class="dropdown-item" href="/profile ">Profile</a></li>
                                         <li><a class="dropdown-item" href="/logout ">Logout</a></li>
                                         <% }else{ %>
                                             <li><a class="dropdown-item" href="/login">Login</a></li>
@@ -91,7 +92,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav nav-mega mx-auto">
                 <li class="nav-item">
-                    <a class="nav-link ml-lg-0" href="index.html">Home
+                    <a class="nav-link ml-lg-0" href="/">Home
                         <span class="sr-only">(current)</span>
                     </a>
                 </li>
@@ -107,22 +108,24 @@
                     <ul class="dropdown-menu mega-menu ">
                         <li>
                             <div class="row">
-                               
+
                                 <div class="col-md-4 media-list span4 text-left">
                                     <h5 class="tittle-w3layouts-sub"> Category</h5>
                                     <ul>
-                                        <% category.forEach(category => { %>
-                                        <li class="media-mini mt-3">
+                                        <% category.forEach(category=> { %>
+                                            <li class="media-mini mt-3">
 
-                                            <a href="shop.html"><%= category.Category %></a>
-                                        </li>
-                                        <% }) %>
-                                       
+                                                <a href="shop.html">
+                                                    <%= category.Category %>
+                                                </a>
+                                            </li>
+                                            <% }) %>
+
                                     </ul>
-                                  
+
 
                                 </div>
-                               
+
                             </div>
                             <hr>
                         </li>

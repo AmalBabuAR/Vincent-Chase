@@ -11,6 +11,11 @@ body a {
 
 
 /*-- checkout --*/
+.container-check {
+    width: 1200px;
+    background: #fff;
+    margin: 0 auto;
+}
 
 .checkout h2 {
 	font-size: 1em;
@@ -166,6 +171,15 @@ td.invert-image a img {
     text-align: center;
     margin: 0 0 2em;
 }
+.checkout-right-basket h4 {
+    padding: 1em;
+    background: #ff4e00;
+    font-size: 1em;
+    color: #fff;
+    text-transform: uppercase;
+    text-align: center;
+    margin: 0 0 2em;
+}
 
 .checkout-left {
 	margin: 2em 0 0;
@@ -185,7 +199,7 @@ td.invert-image a img {
 
 .checkout-right-basket {
 	float: right;
-	margin: 3em 0em;
+	padding-right: 0;
 }
 
 .checkout-left-basket ul li span {
@@ -224,7 +238,7 @@ td.invert-image a img {
 }
 
 .address_form {
-	float: right;
+	float: left;
 }
 
 .information-wrapper input {

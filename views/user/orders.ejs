@@ -1,8 +1,6 @@
 <section>
     <div class="container">
-        <div class="row mt-4">
-            <a href="/admin/add-product" class="btn btn-success ml-auto">Add Products</a>
-        </div>
+        
         <table class="table mt-5">
             <thead>
                 <tr>
@@ -13,12 +11,14 @@
                     <th scope="col">Amount</th>
                     <th scope="col">Payment</th>
                     <th>status</th>
+                    <th> Product</th>
+                    <th>Cancel</th>
                 </tr>
             </thead>
             <tbody>
                 <% orders.forEach(orders=>{%> 
                 <tr>
-                    <td><%= orders.date %> </td>
+                    <td><%= orders.date.toLocaleDateString('en-GB') %> </td>
                     <td><%= orders.deliveryDetails.address %> </td>
                     <td><%= orders.deliveryDetails.pincode %></td>
                     <td><%= orders.deliveryDetails.mobile %></td>
@@ -28,9 +28,19 @@
                     <td>
                         <a href="/view-order-products/<%= orders._id %>" class="btn btn-primary">View Products</a>
                     </td>
+                    <form  action="/status/<%= orders._id %>" method="post">
+                    <td> 
+                        <button id="btn" name="status" value="Cancel Request" class="btn btn-danger" onclick="click()" type="submit">Cancel Request</button>
+                    </td>
+                </form>
                 </tr>
                 <% })  %> 
             </tbody>
         </table>
     </div>
 </section>
+<script>
+    function click() {
+      document.getElementById("btn").disabled = true;
+    }
+    </script>

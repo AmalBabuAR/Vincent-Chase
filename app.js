@@ -22,6 +22,7 @@ const PORT = process.env.PORT||8080
 
 app.use(expressLayouts)
 app.set('layout', './layout/layout')
+// app.set('layout', './layout/admin_layout')
 app.set('view engine', 'ejs')
 
 // app.set('views', path.resolve(__dirname,"views/layout"));

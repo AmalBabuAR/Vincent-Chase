@@ -1,0 +1,81 @@
+<div class="card-body">
+    <div class="table-responsive">
+         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+    <thead>
+        <tr>
+            <th>No</th>
+            <th>Date</th>
+            <th>Address</th>
+            <th>Price</th>
+            <th>Payment</th>
+            <th>Status</th>
+            <th>Updation</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tfoot>
+        <tr>
+            <th>No</th>
+            <th>Date</th>
+            <th>Address</th>
+            <th>Price</th>
+            <th>Payment</th>
+            <th>Status</th>
+            <th>Updation</th>
+            <th>Actions</th>
+        </tr>
+    </tfoot>
+    <tbody>
+        <%let no=1%>
+        <% orders.forEach((order) => { %>
+        <tr>
+            <td><%= no++ %></td>
+            <td><%= order.date.toLocaleDateString('en-GB') %></td>
+            <td><%= order.deliveryDetails.address %> </td>
+            <td>Rs :<%= order.totalAmount %></td>
+            <td><%= order.paymentMethod %> </td>
+            <td><%= order.status %></td>
+           
+            <form method="post" action="/admin/status/<%= order._id %>">
+            <td>
+                <div class="form-row align-items-center">
+                  <div class="col-auto my-1">
+                    <select class="custom-select mr-sm-2" name="status" id="inlineFormCustomSelect">
+                      <option  selected><%= order.status %></option>
+                      <% if(order.status=="Cancel Request"){ %> 
+                        <option  value="Cancel">Canceled</option> 
+                      <% }else if(order.status=="Dispatch"){ %> 
+                        <% }else if(order.status=="Placed"){ %> 
+                            <option  value="Dispatch">Dispatch</option>
+                            <option  value="Deliver">Deliver</option>
+                            <option  value="Cancel">Canceled</option> 
+                      <% }else if(order.status=="Processing"){ %> 
+                      <option  value="Placed">Placed</option>
+                      <option  value="Processing">Processing</option>
+                      <option  value="Dispatch">Dispatch</option>
+                      <option  value="Deliver">Deliver</option>
+                      <option  value="Cancel">Canceled</option> 
+                        <!-- <% } %>  -->
+                    </select>
+                </div>
+                </div>
+                    </td>
+                    <td>
+                 
+                <div class="col-auto my-1">
+                    <button type="submit" class="btn btn-primary">Update</button>
+                 
+                </div>
+              
+
+             </td>
+            </form>
+           
+        </tr>
+        <% }) %>
+       
+        
+    </tbody>
+         </table>
+    </div>
+</div>    

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Otp-Verification</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" type="text/css" href="style.css" />
+  </head>
+  <body>
+    <div class="d-flex justify-content-center align-items-center continer" style="padding:5rem ;">
+      <div class="card py-5 px-3" style="background-color: rgb(130, 128, 128);">
+        <h5 class="m-0">Mobile phone verification</h5>
+        <span class="mobile-text"
+          ><b>Enter the code we just sent on your phone</b>
+          
+        </span>
+        <form method="post" action="/otpLoginVerify">
+
+        
+        <div class="d-flex flex-row mt-5">
+          <input type="text" class="form-control" name="otp" autofocus="" />
+          
+        </div>
+        <div class="pt-1 mb-4">
+                    <button class="btn btn-dark btn-lg btn-block" type="submit">submit</button>
+                  </div>
+       
+      </div>
+      </form>
+    </div>
+    
+  </body>
+</html>

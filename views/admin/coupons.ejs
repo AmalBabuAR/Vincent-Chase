@@ -1,0 +1,40 @@
+<a href="/admin/add-coupon" class="btn btn-danger ml-4">Add Coupon</a>
+
+<div class="card-body">
+    <div class="table-responsive">
+         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Coupon</th>
+                        <th>min value</th>
+                        <th>Discount</th>
+                        <th>Dated</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>No</th>
+                        <th>Coupon</th>
+                        <th>min value</th>
+                        <th>Discount</th>
+                        <th>Dated</th>
+                        
+                    </tr>
+                </tfoot>
+                <tbody>
+                    <%let no=1%>
+                   <% coupons.forEach((coupon)=>{ %> 
+                    <tr>
+                        <td><%= no++ %></td>
+                        <td><%= coupon.coupon %> </td>
+                        <td><%= coupon.minvalue %></td>
+                        <td><%= coupon.discount %></td>
+                        <td><%= coupon.date %></td>
+                    </tr>
+                    <% }) %> 
+                  
+                </tbody>
+         </table>
+    </div>
+</div>    

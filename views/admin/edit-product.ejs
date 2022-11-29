@@ -13,6 +13,12 @@
     
                     <label for="">Price</label>
                     <input type="text" name="Price" class="form-control" value="<%= product.Price %> ">
+
+                    <label for="">Prodect Offer</label>
+                    <input type="text" name="ProductOffer" class="form-control" value="<%= product.ProductOffer %> ">
+
+                    <label for="">Stocks</label>
+                    <input type="text" name="Stocks" class="form-control" value="<%= product.Stocks %> " >
     
                     <label for="">Description</label>
                     <input type="text" name="Description" class="form-control" value="<%= product.Description %> ">
@@ -21,6 +27,7 @@
                     <img src="/product-image/<%= product._id %>.jpg " alt="" style="width:100px;height:auto" id="imgView" class="pt-3">
 
                     <input type="file" name="Image" class="form-control" onchange="viewImage(event)">
+
     
                     <button type="submit" class="btn btn-success mt-4">Submit</button>
                 </form>
